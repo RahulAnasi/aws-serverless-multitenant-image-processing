@@ -28,10 +28,16 @@ flowchart TD
 ```
 ## Application demo
 
-The browser client authenticates through Cognito, uploads images directly to a private S3 bucket, tracks asynchronous processing, and displays tenant-scoped Rekognition results.
+The browser client authenticates through Amazon Cognito, uploads images directly to a private S3 bucket, tracks asynchronous processing, and displays tenant-scoped Amazon Rekognition results.
 
-![Multi-tenant image analysis application](docs/images/application-demo.png)
-![Multi-tenant image analysis application](docs/images/application-demo-1.png)
+### Image upload and analysis Application
+
+![Application dashboard](docs/images/app-demo.jpg)
+
+### Completed processing result
+
+![Completed image-analysis result](docs/images/app-demo-1.jpg)
+
 ## Source layout
 
 - `src/api/lambda_function.py` – tenant-aware HTTP API and presigned URLs.
