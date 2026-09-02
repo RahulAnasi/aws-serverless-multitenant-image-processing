@@ -26,6 +26,12 @@ flowchart TD
     Processor --> Results["Private results S3 bucket"]
     Processor --> DB
 ```
+## Application demo
+
+The browser client authenticates through Cognito, uploads images directly to a private S3 bucket, tracks asynchronous processing, and displays tenant-scoped Rekognition results.
+
+![Multi-tenant image analysis application](docs/images/application-demo.png)
+![Multi-tenant image analysis application](docs/images/application-demo-1.png)
 ## Source layout
 
 - `src/api/lambda_function.py` – tenant-aware HTTP API and presigned URLs.
