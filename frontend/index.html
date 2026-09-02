@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Multi-tenant serverless image analysis demo" />
+    <title>MTIP Image Analysis</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div>
+        <p class="eyebrow">AWS SERVERLESS CAPSTONE</p>
+        <h1>Multi-Tenant Image Analysis</h1>
+      </div>
+      <div class="session-actions">
+        <span id="identity" class="identity" hidden></span>
+        <button id="login-button" class="button primary">Sign in</button>
+        <button id="logout-button" class="button secondary" hidden>Sign out</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="signed-out-panel" class="hero card">
+        <div>
+          <p class="eyebrow">PRIVATE BY DESIGN</p>
+          <h2>Analyze images without exposing your S3 buckets.</h2>
+          <p>
+            Sign in with Cognito. The application derives your tenant from the
+            verified JWT and uses short-lived URLs for uploads and results.
+          </p>
+        </div>
+        <div class="architecture-list" aria-label="Architecture summary">
+          <span>Cognito JWT</span>
+          <span>API Gateway + Lambda</span>
+          <span>S3 + SQS + Rekognition</span>
+        </div>
+      </section>
+
+      <section id="app-panel" hidden>
+        <div class="grid">
+          <section class="card upload-card">
+            <p class="eyebrow">NEW ANALYSIS</p>
+            <h2>Upload an image</h2>
+            <p class="muted">JPEG or PNG, up to 10 MiB.</p>
+            <form id="upload-form">
+              <label class="file-picker" for="image-input">
+                <span id="file-label">Choose an image</span>
+                <input id="image-input" type="file" accept="image/jpeg,image/png" required />
+              </label>
+              <button id="analyze-button" class="button primary full" type="submit">
+                Analyze image
+              </button>
+            </form>
+            <div id="progress" class="progress" role="status" aria-live="polite" hidden>
+              <span class="spinner" aria-hidden="true"></span>
+              <span id="progress-text">Preparing upload…</span>
+            </div>
+          </section>
+
+          <section class="card result-card">
+            <p class="eyebrow">LATEST RESULT</p>
+            <h2>Detected labels</h2>
+            <div id="empty-result" class="empty-state">
+              Results from your next completed job will appear here.
+            </div>
+            <div id="result-content" hidden>
+              <div id="labels" class="labels"></div>
+              <p id="result-meta" class="muted"></p>
+            </div>
+          </section>
+        </div>
+
+        <section class="card jobs-card">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">TENANT-SCOPED DATA</p>
+              <h2>Your jobs</h2>
+            </div>
+            <button id="refresh-button" class="button secondary">Refresh</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>File</th>
+                  <th>Status</th>
+                  <th>Labels</th>
+                  <th>Created</th>
+                  <th>Result</th>
+                </tr>
+              </thead>
+              <tbody id="jobs-body"></tbody>
+            </table>
+          </div>
+          <p id="jobs-empty" class="empty-state">No jobs yet.</p>
+        </section>
+      </section>
+
+      <div id="notice" class="notice" role="alert" hidden></div>
+    </main>
+
+    <footer>
+      Cognito · API Gateway · Lambda · DynamoDB · S3 · SQS · Rekognition
+    </footer>
+
+    <script src="config.js"></script>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
