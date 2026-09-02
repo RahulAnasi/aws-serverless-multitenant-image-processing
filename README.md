@@ -12,6 +12,20 @@ Cognito PKCE sign-in, JWT-protected job creation, direct private S3 upload,
 S3-to-SQS delivery, idempotent Lambda processing, Rekognition label detection,
 private result retrieval, and tenant-scoped job history.
 
+## Architecture overview
+
+```mermaid
+flowchart TD
+    User["Browser SPA"] --> Cognito["Amazon Cognito"]
+    User --> API["API Gateway + API Lambda"]
+    API --> DB["DynamoDB"]
+    User --> Uploads["Private upload S3 bucket"]
+    Uploads --> Queue["SQS processing queue"]
+    Queue --> Processor["Processor Lambda"]
+    Processor --> Rekognition["Amazon Rekognition"]
+    Processor --> Results["Private results S3 bucket"]
+    Processor --> DB
+```
 ## Source layout
 
 - `src/api/lambda_function.py` – tenant-aware HTTP API and presigned URLs.
