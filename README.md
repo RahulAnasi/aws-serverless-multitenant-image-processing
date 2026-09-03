@@ -90,7 +90,7 @@ renders the Rekognition result.
 4. Start the local server:
 
    ```powershell
-   python -m http.server 8000
+   python3 -m http.server 8000
    ```
 
 5. Open `http://localhost:8000/` and sign in.
